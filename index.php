@@ -18,7 +18,7 @@ session_start();
 </head>
 
 <body>
-
+<br>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
 
 		<?php if(isset($_SESSION['loggedin'])): ?>
