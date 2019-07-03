@@ -24,6 +24,7 @@ CREATE TABLE users (
 	ciudad VARCHAR(60),
 	telefono VARCHAR(30),
 	descripcion VARCHAR(500),
+	foto_perfil VARCHAR(250),
     id_modalidad INTEGER,
     id_niveleducacional INTEGER,
     id_asignatura INTEGER,
