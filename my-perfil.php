@@ -62,11 +62,11 @@ session_start();
                             </div>
                             <div class="col-md-6">
                                 <div class="info">
-                                    <h3><?php echo $_SESSION['name']; ?></h3>
+                                    <h3><?php echo $_SESSION['name']; ?> <?php echo $_SESSION['lastname']; ?> </h3>
                                     <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
                                     <div class="price">
                                         <h3>$0000 /h</h3>
-                                    </div><button class="btn btn-primary" type="button"><i class="icon-edit"></i>Editar mi Perfil</button>
+                                    </div><a href='edit-perfil.php'><button class="btn btn-primary" type="button"><i class="icon-edit"></i>Editar mi Perfil</button></a>
                                     <span class="glyphicon glyphicon-envelope"></span>
                                     <div class="summary">
                                         <p>Edita tu perfil para añadir tu descripción como profesional.</p>

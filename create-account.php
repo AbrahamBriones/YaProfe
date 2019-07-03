@@ -31,7 +31,7 @@
 	if ($count == 1) {
 	echo "<div class='alert alert-warning mt-4' role='alert'>
 					<p>Este email ya se encuentra en uso.</p>
-					<p><a href='registration.html'>Intentalo nuevamente</a></p>
+					<p><a href='registration.php'>Intentalo nuevamente</a></p>
 				</div>";
 	} else {	
 	
@@ -40,17 +40,27 @@
 	database and the account is created
 	*/
 	$name = $_POST['name'];
+	$lastname = $_POST['lastname'];
 	$email = $_POST['email'];
 	$pass = $_POST['password'];
+	/*
+	$ciudad = $_POST['ciudad'];
+	$telefono = $_POST['telefono'];
+	$descripcion = $_POST['descripcion'];
+	$id_modalidad = $_POST['id_modalidad'];
+	$id_niveleducacional = $_POST['id_niveleducacional'];
+	$id_asignatura = $_POST['id_asignatura'];
+	$foto_perfil = $_POST['foto_perfil'];
+	*/
 	
 	// The password_hash() function convert the password in a hash before send it to the database
 	$passHash = password_hash($pass, PASSWORD_DEFAULT);
 	
 	// Query to send Name, Email and Password hash to the database
-	$query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$passHash')";
+	$query = "INSERT INTO users (name, lastname, email, password, ciudad, telefono, descripcion, id_modalidad, id_niveleducacional, id_asignatura, foto_perfil) VALUES ('$name', '$lastname', '$email', '$passHash', NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
 	if (mysqli_query($conexion, $query)) {
 		echo "<div class='alert alert-success mt-4' role='alert'><h3>Tu cuenta ha sido creada exitosamente.</h3>
-		<a class='btn btn-outline-primary' href='login.php' role='button'>Iniciar Sesión</a></div>";		
+		<a class='btn btn-outline-primary' href='login.php' role='button'>Iniciar Sesión</a></div>";
 		} else {
 			echo "Error: " . $query . "<br>" . mysqli_error($conexion);
 		}	

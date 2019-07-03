@@ -27,12 +27,12 @@ session_start();
 				die("Connection failed: " . mysqli_connect_error());
 			}
 			
-			// data sent from form login.html 
+			// data sent from form login.php 
 			$email = $_POST['email']; 
 			$password = $_POST['password'];
 			
 			// Query sent to database
-			$result = mysqli_query($conexion, "SELECT name, email, password FROM users WHERE email = '$email'");
+			$result = mysqli_query($conexion, "SELECT name, lastname, email, password FROM users WHERE email = '$email'");
 			
 			// Variable $row hold the result of the query
 			$row = mysqli_fetch_assoc($result);
@@ -48,7 +48,10 @@ session_start();
 			if (password_verify($password, $hash)) {	
 				
 				$_SESSION['loggedin'] = true;
+				$_SESSION['id'] = $row['id'];
 				$_SESSION['name'] = $row['name'];
+				$_SESSION['lastname'] = $row['lastname'];
+				$_SESSION['email'] = $row['email'];
 				$_SESSION['start'] = time();
 				$_SESSION['expire'] = $_SESSION['start'] + (100 * 60) ; //Duración en segundos de la sesión						
 				
