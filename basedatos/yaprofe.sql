@@ -112,9 +112,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `lastname`, `email`, `password`, `ciudad`, `telefono`, `descripcion`, `precio`, `id_modalidad`, `id_niveleducacional`, `id_asignatura`, `foto_perfil`) VALUES
-(10, 'Fabian', 'Cardenas', 'fabi2@gmail.com', '$2y$10$ok9WLx2zkYB8yKXJrGsqKuDtbtw0RPZ0vzmlaMD1QukIfj5OCwtw6', 'ChillÃ¡n', '981767673', 'Yo estudio en la UBB y soy entero loco, entero faioooo', 12500, 1, 1, 1, NULL),
-(13, 'Jorge', 'Baeza', 'jorge@gmail.com', '$2y$10$1MxlgP0hbiMWkkKvuy0uBusUD7QQYCpecWDB.F46Cs/YE8WpRNdGe', 'Las Quilas', '919283797', 'Estudio InformÃ¡tica en la UBB de ChillÃ¡n con el wn de al lado y el del otro lado, eso. Cobro barato.', 7000, 2, 2, 2, NULL),
-(14, 'Abraham', 'Briones', 'abraham@gmail.com', '$2y$10$qMKyrEmJ07ywaGZvQELgqOXoNCevGWX7kRvZCQJ8XIjtyCWqLphqq', 'Bulnes', '900098787', 'Soy futuro dueÃ±o de Xiaomi, asÃ­ que trabajen conmigo logis', 5000, 1, 3, 1, NULL),
+(10, 'Fabian', 'Cardenas', 'fabi2@gmail.com', '$2y$10$ok9WLx2zkYB8yKXJrGsqKuDtbtw0RPZ0vzmlaMD1QukIfj5OCwtw6', 'Chillán', '981767673', 'Yo estudio en la UBB y soy entero loco, entero faioooo', 12500, 1, 1, 1, NULL),
+(13, 'Jorge', 'Baeza', 'jorge@gmail.com', '$2y$10$1MxlgP0hbiMWkkKvuy0uBusUD7QQYCpecWDB.F46Cs/YE8WpRNdGe', 'Las Quilas', '919283797', 'Estudio Informática en la UBB de Chillán con el wn de al lado y el del otro lado, eso. Cobro barato.', 7000, 2, 2, 2, NULL),
+(14, 'Abraham', 'Briones', 'abraham@gmail.com', '$2y$10$qMKyrEmJ07ywaGZvQELgqOXoNCevGWX7kRvZCQJ8XIjtyCWqLphqq', 'Bulnes', '900098787', 'Soy futuro dueño de Xiaomi, así­ que trabajen conmigo logis', 5000, 1, 3, 1, NULL),
 (15, 'Monito', 'Vidal', 'monito@gmail.com', '$2y$10$T.7IIVDMuL2jNhsJ8zYZNeMihCGnKl.rTnCsFo8Q.xn8uNr5BV4PO', 'Santiago', '900000000', 'Soy hijo del King Arthur', 100000, NULL, NULL, NULL, NULL);
 
 --
