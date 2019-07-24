@@ -1,5 +1,7 @@
 <?php
 session_start();
+include 'conexion.php';
+$mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 ?>
 
 <!DOCTYPE html>
@@ -27,10 +29,24 @@ session_start();
             <div class="collapse navbar-collapse"
                 id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="index.php">Home</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="profesores.php">Profesores</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="my-perfil.php"><?php echo $_SESSION['name']; ?></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li>
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="my-perfil.php"></a></li> -->
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li> -->
+                    <!-- <form class="form-inline">
+                        <li class="nav-item" role="presentation"><a href="my-perfil.php"><button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="button"><?php echo $_SESSION['name']; ?></a></li>                    
+                    </form> -->
+                    <li>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['name']; ?></button>
+                            <div class="dropdown-menu">
+                            <a class="dropdown-item" href="my-perfil.php">Mi Perfil</a>
+                            <a class="dropdown-item" href="edit-perfil.php">Editar Perfil</a>
+                            <a class="dropdown-item" href="logout.php">Cerrar Sesión</a>
+                            </div>
+                        </div></li>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -66,21 +82,21 @@ session_start();
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-4 col-md-3 col-sm-12 p-0">
-                            <input type="text" class="form-control search-slt" placeholder="Elige tu ciudad">
+                            <input type="text" class="form-control search-slt" placeholder="Ingresa tu ciudad">
                         </div>
                         <div class="col-lg-4 col-md-3 col-sm-12 p-0">
                             <select class="form-control search-slt" id="exampleFormControlSelect1">
-                                <option>¿Qué materia necesitas?</option>
-                                <option>Matemáticas</option>
-                                <option>Lenguaje</option>
-                                <option>Ciencias</option>
-                                <option>Biología</option>
-                                <option>Física</option>
-                                <option>Programación</option>
+                                    <option>¿Qué materia necesitas?</option>
+                                    <?php
+                                      $query = $mysqli -> query ("SELECT * FROM asignatura");
+                                      while ($valores = mysqli_fetch_array($query)) {
+                                        echo '<option value="'.$valores[id].'">'.$valores[name].'</option>';
+                                      }
+                                    ?>
                             </select>
                         </div>
                         <div class="col-lg-4 col-md-3 col-sm-12 p-0">
-                            <button type="button" class="btn btn-danger wrn-btn">Buscar</button>
+                            <a href='profesores.php'><button type="button" class="btn btn-danger wrn-btn">Buscar</button></a>
                         </div>
                     </div>
                 </div>

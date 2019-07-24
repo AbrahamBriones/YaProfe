@@ -42,9 +42,6 @@
                         <div class="form-group">
                             <label for="name">Apellidos</label><input type="text" class="form-control" name="lastname" required>
                         </div>
-                        <div class="form-group">
-                            <label for="name">Nombre Usuario</label><input type="text" class="form-control" name="nickname" required>
-                        </div>
                         <div class="form-group"><label for="email">Correo electrónico</label>
                             <input type="email" class="form-control" name="email" aria-describedby="emailHelp" required>
                         </div>

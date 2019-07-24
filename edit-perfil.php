@@ -1,6 +1,7 @@
 <?php
 session_start();
-$id = $_SESSION['id'];
+include 'conexion.php';
+$mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +12,7 @@ $id = $_SESSION['id'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Editar Perfil - YaProfe</title>
     <meta name="description" content="Encuentra tus profes ya!">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
@@ -20,23 +22,38 @@ $id = $_SESSION['id'];
 
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-        <?php if(isset($_SESSION['loggedin'])): ?>
-        
-        <div class="container"><a class="navbar-brand logo" href="index.php">YaProfe!</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+
+		<?php if(isset($_SESSION['loggedin'])): ?>
+  		
+  		<div class="container"><a class="navbar-brand logo" href="index.php">YaProfe!</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse"
                 id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="index.php">Home</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="profesores.php">Profesores</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="my-perfil.php"><?php echo $_SESSION['name']; ?></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li>
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="my-perfil.php"></a></li> -->
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li> -->
+                    <!-- <form class="form-inline">
+                        <li class="nav-item" role="presentation"><a href="my-perfil.php"><button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="button"><?php echo $_SESSION['name']; ?></a></li>                    
+                    </form> -->
+                    <li>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['name']; ?></button>
+                            <div class="dropdown-menu">
+                            <a class="dropdown-item" href="my-perfil.php">Mi Perfil</a>
+                            <a class="dropdown-item" href="edit-perfil.php">Editar Perfil</a>
+                            <a class="dropdown-item" href="logout.php">Cerrar Sesión</a>
+                            </div>
+                        </div></li>
+                    </div>
                 </ul>
             </div>
         </div>
 
-        <?php else: ?>
+		<?php else: ?>
 
-        <div class="container"><a class="navbar-brand logo" href="index.php">YaProfe!</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+		<div class="container"><a class="navbar-brand logo" href="index.php">YaProfe!</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse"
                 id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
@@ -48,7 +65,8 @@ $id = $_SESSION['id'];
             </div>
         </div>
 
-        <?php endif; ?>
+		<?php endif; ?>
+
     </nav>
     <main class="page registration-page">
         <section class="clean-block clean-form dark">
@@ -56,49 +74,88 @@ $id = $_SESSION['id'];
                 <div class="block-heading">
                     <h2 class="text-info">Editando Perfil</h2>
                 </div>
-
+                    <!--
                     <form method="POST" action="edit_datos.php" enctype="multipart/form-data">
                         <input type="text" class="form-control" name="email" value="<?php echo $_SESSION['lastname'];?>">
                         <button class="btn btn-primary mt-3">Editar</button>
                     </form>
-                    
-                    <form method="post" action="create-account.php" method="POST">
+                    -->
+
+                    <form method="POST" action="edit-datos.php" method="POST">
+                        
                         <div class="form-group">
-                            <label for="name">Nombre</label><input type="text" class="form-control" name="name" required>
+                            <label for="name">Número de Profesor</label>
+                            <input type="text" class="form-control" name="id" readonly="readonly" value="<?php echo $_SESSION['id'];?>" required>
                         </div>
                         <div class="form-group">
-                            <label for="name">Apellidos</label><input type="text" class="form-control" name="name" required>
+                            <label for="name">Nombre</label>
+                            <input type="text" class="form-control" name="name" value="<?php echo $_SESSION['name'];?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Apellidos</label>
+                            <input type="text" class="form-control" name="lastname" value="<?php echo $_SESSION['lastname'];?>" required>
                         </div>
                         <div class="form-group"><label for="email">Correo electrónico</label>
-                            <input type="email" class="form-control" name="email" aria-describedby="emailHelp" required>
+                            <input type="email" class="form-control" name="email" aria-describedby="emailHelp" value="<?php echo $_SESSION['email'];?>" required>
                         </div>
                         <div class="form-group"><label for="password">Contraseña</label>
-                            <input type="password" class="form-control" name="password" required>
+                            <input type="password" class="form-control" name="password" placeholder="Contraseña actual o nueva" required>
                         </div>
                         <div class="form-group">
-                            <label for="name">Ciudad</label><input type="text" class="form-control" name="ubicacion">
+                            <label for="name">Ciudad</label>
+                            <input type="text" class="form-control" name="ciudad" value="<?php echo $_SESSION['ciudad'];?>" required>
                         </div>
                         <div class="form-group">
-                            <label for="name">Asignatura</label><input type="text" class="form-control" name="asignatura">
+                            <label for="name">Teléfono</label>
+                            <input type="text" class="form-control" name="telefono" value="<?php echo $_SESSION['telefono'];?>" required>
                         </div>
                         <div class="form-group">
-                            <label for="name">Nivel Educacional</label><input type="text" class="form-control" name="nivelE">
+                            <label for="name">Descripción</label>
+                            <input type="text" class="form-control" name="descripcion" value="<?php echo $_SESSION['descripcion'];?>" required>
                         </div>
                         <div class="form-group">
-                            <label for="name">Modalidad</label><input type="text" class="form-control" name="modalidad">
+                            <label for="name">Precio por hora</label>
+                            <input type="text" class="form-control" name="precio" value="<?php echo $_SESSION['precio'];?>" required>
+                        </div>
+
+
+                        <div class="form-group">
+                            <select name="id_asignatura">
+                                <option value="0">Seleccione Asignatura:</option>
+                                <?php
+                                  $query = $mysqli -> query ("SELECT * FROM asignatura");
+                                  while ($valores = mysqli_fetch_array($query)) {
+                                    echo '<option value="'.$valores[id].'">'.$valores[name].'</option>';                                  }
+                                ?>
+                              </select>
                         </div>
                         <div class="form-group">
-                            <label for="name">Teléfono</label><input type="text" class="form-control" name="telefono">
+                                <select name="id_niveleducacional">
+                                    <option value="0">Nivel Educacional:</option>
+                                    <?php
+                                      $query = $mysqli -> query ("SELECT * FROM niveleducacional");
+                                      while ($valores = mysqli_fetch_array($query)) {
+                                        echo '<option value="'.$valores[id].'">'.$valores[name].'</option>';
+                                      }
+                                    ?>
+                                </select>
                         </div>
                         <div class="form-group">
-                            <label for="name">Foto Perfil</label><input type="text" class="form-control" name="telefono">
+                            <select name="id_modalidad">
+                                    <option value="0">Seleccione Modalidad:</option>
+                                    <?php
+                                      $query = $mysqli -> query ("SELECT * FROM modalidad");
+                                      while ($valores = mysqli_fetch_array($query)) {
+                                        echo '<option value="'.$valores[id].'">'.$valores[name].'</option>';
+                                      }
+                                    ?>
+                                </select>
                         </div>
                         <div class="form-group">
-                            <label for="name">Descripción</label><input type="text" class="form-control" name="descripcion">
+                            <label for="name">Foto Perfil</label><input type="file" class="form-control" name="foto_perfil">
                         </div>
                         <button type="submit" class="btn btn-success btn-block">Guardar Cambios</button>
                     </form>
-
 
             </div>
         </section>

@@ -19,6 +19,7 @@ session_start();
 
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+
         <?php if(isset($_SESSION['loggedin'])): ?>
         
         <div class="container"><a class="navbar-brand logo" href="index.php">YaProfe!</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -27,8 +28,22 @@ session_start();
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="profesores.php">Profesores</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="my-perfil.php"><?php echo $_SESSION['name']; ?></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li>
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="my-perfil.php"></a></li> -->
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li> -->
+                    <!-- <form class="form-inline">
+                        <li class="nav-item" role="presentation"><a href="my-perfil.php"><button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="button"><?php echo $_SESSION['name']; ?></a></li>                    
+                    </form> -->
+                    <li>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['name']; ?></button>
+                            <div class="dropdown-menu">
+                            <a class="dropdown-item" href="my-perfil.php">Mi Perfil</a>
+                            <a class="dropdown-item" href="edit-perfil.php">Editar Perfil</a>
+                            <a class="dropdown-item" href="logout.php">Cerrar Sesión</a>
+                            </div>
+                        </div></li>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -39,7 +54,7 @@ session_start();
             <div class="collapse navbar-collapse"
                 id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.php">Home</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="index.php">Home</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="profesores.php">Profesores</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.php">Iniciar Sesión</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="registration.php">Registrarme</a></li>
@@ -48,6 +63,7 @@ session_start();
         </div>
 
         <?php endif; ?>
+
     </nav>
     <main class="page product-page">
         <section class="clean-block clean-product dark">
@@ -65,11 +81,11 @@ session_start();
                                     <h3><?php echo $_SESSION['name']; ?> <?php echo $_SESSION['lastname']; ?> </h3>
                                     <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
                                     <div class="price">
-                                        <h3>$0000 /h</h3>
+                                        <h3>$ <?php echo $_SESSION['precio']; ?> / hora</h3>
                                     </div><a href='edit-perfil.php'><button class="btn btn-primary" type="button"><i class="icon-edit"></i>Editar mi Perfil</button></a>
                                     <span class="glyphicon glyphicon-envelope"></span>
                                     <div class="summary">
-                                        <p>Edita tu perfil para añadir tu descripción como profesional.</p>
+                                        <p><?php echo $_SESSION['descripcion']; ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -87,19 +103,32 @@ session_start();
                                             <tbody>
                                                 <tr>
                                                     <td class="stat">Ubicación</td>
-                                                    <td>Edita tu perfil y añade ubicación</td>
+                                                    <td><?php echo $_SESSION['ciudad']; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="stat">Asignatura(s)</td>
-                                                    <td>Edita tu perfil y añade asignaturas</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="stat">Teléfono</td>
-                                                    <td>Edita tu perfil y añade tu teléfono</td>
+                                                    <!--
+                                                    <?php 
+                                                        $query = "SELECT name FROM asignatura WHERE user.id_asignatura = id_asignatura";
+                                                     ?>
+                                                    -->
+                                                    <td class="stat">Asignatura</td>
+                                                    <td> </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="stat">E-mail</td>
-                                                    <td>Edita tu perfil y añade tu email</td>
+                                                    <td> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">Modalidad de trabajo</td>
+                                                    <td> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">Teléfono</td>
+                                                    <td><?php echo $_SESSION['telefono']; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">E-mail</td>
+                                                    <td><?php echo $_SESSION['email']; ?></td>
                                                 </tr>
                                             </tbody>
                                         </table>

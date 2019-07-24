@@ -1,10 +1,14 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Juan Carlos Delgado - YaProfe</title>
+    <title>Nombre Apellido Profesor - YaProfe</title>
     <meta name="description" content="Encuentra tus profes ya!">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
@@ -22,9 +26,23 @@
                 id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="index.php">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="profesores.php">Profesores</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="my-perfil.php"><?php echo $_SESSION['name']; ?></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="profesores.php">Profesores</a></li>
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="my-perfil.php"></a></li> -->
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li> -->
+                    <!-- <form class="form-inline">
+                        <li class="nav-item" role="presentation"><a href="my-perfil.php"><button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="button"><?php echo $_SESSION['name']; ?></a></li>                    
+                    </form> -->
+                    <li>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['name']; ?></button>
+                            <div class="dropdown-menu">
+                            <a class="dropdown-item" href="my-perfil.php">Mi Perfil</a>
+                            <a class="dropdown-item" href="edit-perfil.php">Editar Perfil</a>
+                            <a class="dropdown-item" href="logout.php">Cerrar Sesión</a>
+                            </div>
+                        </div></li>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -35,8 +53,8 @@
             <div class="collapse navbar-collapse"
                 id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.php">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="profesores.php">Profesores</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="index.php">Home</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="profesores.php">Profesores</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.php">Iniciar Sesión</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="registration.php">Registrarme</a></li>
                 </ul>
@@ -44,6 +62,7 @@
         </div>
 
         <?php endif; ?>
+
     </nav>
     <main class="page product-page">
         <section class="clean-block clean-product dark">
@@ -53,19 +72,32 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="gallery">
-                                    <div class="sp-wrap"><a href="assets/img/tech/image1.jpg"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image1.jpg"></a></div>
+                                    <div class="sp-wrap"><a href="assets/img/tech/image1.jpg"><img class="img-fluid d-block mx-auto" src="assets/img/tech/my-perfil.png"></a></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="info">
-                                    <h3>Juan Carlos Delgado</h3>
-                                    <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
+                                    <h3>Nombre Apellido Profesor</h3>
+                                                <form>
+                                                  <p class="clasificacion">
+                                                    <input id="radio1" type="radio" name="estrellas" value="5"><!--
+                                                    --><label style="font-size: 30px" for="radio1">★</label><!--
+                                                    --><input id="radio2" type="radio" name="estrellas" value="4"><!--
+                                                    --><label style="font-size: 30px" for="radio2">★</label><!--
+                                                    --><input id="radio3" type="radio" name="estrellas" value="3"><!--
+                                                    --><label style="font-size: 30px" for="radio3">★</label><!--
+                                                    --><input id="radio4" type="radio" name="estrellas" value="2"><!--
+                                                    --><label style="font-size: 30px" for="radio4">★</label><!--
+                                                    --><input id="radio5" type="radio" name="estrellas" value="1"><!--
+                                                    --><label style="font-size: 30px" for="radio5">★</label>
+                                                  </p>
+                                                </form>
                                     <div class="price">
-                                        <h3>$5.000 /h</h3>
+                                        <h3>$0.000 /h</h3>
                                     </div><button class="btn btn-primary" type="button"><i class="icon-envelope"></i>Contactar Profe</button>
                                     <span class="glyphicon glyphicon-envelope"></span>
                                     <div class="summary">
-                                        <p>Soy estudiante de Pedagogía/Licenciatura en educación de Física y Matemática de la Universidad de Santiago de Chile. Desde hace dos años realizo clases particulares de Física y Matemáticas para alumnos de: *Enseñanza básica (7° y 8° básico).</p>
+                                        <p>Aquí corresponde la descripción que cada profesor desee añadir a su perfil.</p>
                                     </div>
                                 </div>
                             </div>
@@ -84,19 +116,19 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="stat">Ubicación</td>
-                                                    <td>Chillán Viejo, Los Cardenales 153°</td>
+                                                    <td>Ejemplo de ublicación</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="stat">Asignatura(s)</td>
-                                                    <td>Educación física, Matemáticas</td>
+                                                    <td>Ejemplo de asignatura</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="stat">Teléfono</td>
-                                                    <td>+569-909222444</td>
+                                                    <td>+569-0000000</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="stat">E-mail</td>
-                                                    <td>juancarlosdel@gmail.com</td>
+                                                    <td>ejemplo@email.com</td>
                                                 </tr>
                                             </tbody>
                                         </table>

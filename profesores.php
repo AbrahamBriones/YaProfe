@@ -1,5 +1,7 @@
 <?php
 session_start();
+include 'conexion.php';
+$conexion = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +21,7 @@ session_start();
 
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+
         <?php if(isset($_SESSION['loggedin'])): ?>
         
         <div class="container"><a class="navbar-brand logo" href="index.php">YaProfe!</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -26,9 +29,23 @@ session_start();
                 id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="index.php">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="profesores.php">Profesores</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="my-perfil.php"><?php echo $_SESSION['name']; ?></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="profesores.php">Profesores</a></li>
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="my-perfil.php"></a></li> -->
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li> -->
+                    <!-- <form class="form-inline">
+                        <li class="nav-item" role="presentation"><a href="my-perfil.php"><button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="button"><?php echo $_SESSION['name']; ?></a></li>                    
+                    </form> -->
+                    <li>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['name']; ?></button>
+                            <div class="dropdown-menu">
+                            <a class="dropdown-item" href="my-perfil.php">Mi Perfil</a>
+                            <a class="dropdown-item" href="edit-perfil.php">Editar Perfil</a>
+                            <a class="dropdown-item" href="logout.php">Cerrar Sesión</a>
+                            </div>
+                        </div></li>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -39,8 +56,8 @@ session_start();
             <div class="collapse navbar-collapse"
                 id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.php">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="profesores.php">Profesores</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="index.php">Home</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="profesores.php">Profesores</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.php">Iniciar Sesión</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="registration.php">Registrarme</a></li>
                 </ul>
@@ -48,6 +65,7 @@ session_start();
         </div>
 
         <?php endif; ?>
+
     </nav>
     <main class="page catalog-page">
         <section class="clean-block clean-catalog dark">
@@ -129,123 +147,35 @@ session_start();
                         <div class="col-md-9">
                             <div class="products">
                                 <div class="row no-gutters">
+
+                                    <?php 
+                                        $query = "SELECT * FROM users";
+                                        $resultado = $conexion->query($query);
+                                        while ($row=$resultado->fetch_assoc()) {
+                                    ?>
+
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
-                                            <div class="image"><a href="profe.php"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image1.jpg"></a></div>
-                                            <h5>Juan Carlos Delgado</h5>
-                                            <div class="product-name"><a href="#">Soy estudiante de Pedagogía/Licenciatura en educación de Física y Matemática de la Universidad de Santiago de Chile. Desde hace dos años realizo clases particulares de Física y Matemáticas para alumnos de: *Enseñanza básica (7° y 8° básico) </a></div>
+                                            <div class="image"><a href="profe.php"><img class="img-fluid d-block mx-auto" src="assets/img/tech/my-perfil.png"></a></div>
+                                            <h5><?php echo $row['name'];?> <?php echo $row['lastname'];?></h5>
+                                            <h9><?php echo $row['ciudad'];?></h9>
+                                            <div class="product-name"><a href="#"><?php echo $row['descripcion'];?></a></div>
                                             <div class="about">
-                                                <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
+                                                <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div> 
                                                 <div class="price">
-                                                    <h3>$5.000 /h</h3>
+                                                    <h3>$ <?php echo $row['precio'];?> /h</h3>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="clean-product-item">
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image2.jpg"></a></div>
-                                            <h5>María Magdalena Pérez</h5>
-                                            <div class="product-name"><a href="#">Mi método de enseñanza es interactiva, me gusta relacionar los conceptos propios de la asignatura con los intereses de los estudiantes, para así lograr aprendizajes significativos. Cabe señalar que soy estudiante de Magíster en Didáctica de la Lengua y Literatura.</a></div>
-                                            <div class="about">
-                                                <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
-                                                <div class="price">
-                                                    <h3>$15.000 /h</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="clean-product-item">
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image3.jpg"></a></div>
-                                            <h5>Marlene Ramirez</h5>
-                                            <div class="product-name"><a href="#">Soy Licenciado en Biología, venezolano, que dicta clases particulares desde hace 11 años. Por ser materias prácticas, he aprendido, junto con mis alumnos, que la mejor manera de aprenderlas es practicando y analizando lo que se pide y se necesita para resolver los ejercicios o problemas.</a></div>
-                                            <div class="about">
-                                                <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
-                                                <div class="price">
-                                                    <h3>$10.000 /h</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="clean-product-item">
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image4.jpg"></a></div>
-                                            <h5>Camila Moreno</h5>
-                                            <div class="product-name"><a href="#">Soy Rodolfo, soy titulado de Ingeniero Civil Industrial Obtuve 850 puntos en la PSU matemáticas el 2010, me gusta el ramo y me entretiene enseñarlo.</a></div>
-                                            <div class="about">
-                                                <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
-                                                <div class="price">
-                                                    <h3>$5.000 /h</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="clean-product-item">
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image5.jpg"></a></div>
-                                            <h5>Patricia Hernández</h5>
-                                            <div class="product-name"><a href="#">Soy Ingeniero en electrónica, graduado con honores en la Universidad Dr Rafael Belloso Chacin. He trabajado con niños y adultos, enseñando diferentes asignaturas, desde matemáticas y geometría hasta gramática e inglés. He trabajado en diferentes institutos y en una escuela bilingue desde 2013.</a></div>
-                                            <div class="about">
-                                                <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
-                                                <div class="price">
-                                                    <h3>$30.000 /h</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="clean-product-item">
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image6.jpg"></a></div>
-                                            <h5>Juan Evair Figueroa</h5>
-                                            <div class="product-name"><a href="#">Licenciado en Informática, realizo clases de: Java básico Java intermedio. Java web(servlets) Creación de servicios Rest con Springboot Creacion de proyectos informaticos para tesis.</a></div>
-                                            <div class="about">
-                                                <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
-                                                <div class="price">
-                                                    <h3>$100</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="clean-product-item">
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image7.jpg"></a></div>
-                                            <h5>Orlando Cáceres</h5>
-                                            <div class="product-name"><a href="#">Estudiante de último año de Ingenieria Informatica hace clases de Java, Javascript, HTML + CSS e informatica básica en general.</a></div>
-                                            <div class="about">
-                                                <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
-                                                <div class="price">
-                                                    <h3>$15.000 /h</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="clean-product-item">
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image8.jpg"></a></div>
-                                            <h5>Ximena Ortiz Pérez</h5>
-                                            <div class="product-name"><a href="#">Soy estudiante de Ingeniería Ambiental en la USACH. Basta experiencia realizando clases particulares de educación básica y media, y como ayudante universitaria.</a></div>
-                                            <div class="about">
-                                                <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
-                                                <div class="price">
-                                                    <h3>$100</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="clean-product-item">
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="assets/img/tech/image9.jpg"></a><a href="#"></a></div>
-                                            <h5>Alejandro Candia Cádiz</h5>
-                                            <div class="product-name"><a href="#">Profesor dicta clases particulares a domicilio y de manera online. Paciencia, facilidad, y simpleza para explicar los contenidos de manera que el alumno sienta comodidad al aprender y libertad para realizar cualquier pregunta.</a></div>
-                                            <div class="about">
-                                                <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
-                                                <div class="price">
-                                                    <h3>$17.000 /h</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
+                                    <?php
+                                        }
+                                    ?>    
+
+
+
+                                    
                                 </div>
                                 <nav>
                                     <ul class="pagination">
