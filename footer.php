@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="footer-copyright">
-            <p>© 2018 Copyright Text</p>
+            <p>© 2019 Copyright Text</p>
         </div>
     </footer>
     <script src="assets/js/jquery.min.js"></script>

@@ -107,20 +107,20 @@ $mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
                         </div>
                         <div class="form-group">
                             <label for="name">Teléfono</label>
-                            <input type="text" class="form-control" name="telefono" value="<?php echo $_SESSION['telefono'];?>" required>
+                            <input type="tel" class="form-control" name="telefono"  placeholder="9 dígitos" pattern="[0-9]{9}" value="<?php echo $_SESSION['telefono'];?>" required>
                         </div>
                         <div class="form-group">
                             <label for="name">Descripción</label>
-                            <input type="text" class="form-control" name="descripcion" value="<?php echo $_SESSION['descripcion'];?>" required>
+                            <textarea type="text" rows="3" class="form-control" name="descripcion" value="<?php echo $_SESSION['descripcion'];?>" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="name">Precio por hora</label>
-                            <input type="text" class="form-control" name="precio" value="<?php echo $_SESSION['precio'];?>" required>
+                            <input type="number" class="form-control" name="precio" value="<?php echo $_SESSION['precio'];?>" required>
                         </div>
 
 
                         <div class="form-group">
-                            <select name="id_asignatura">
+                            <select name="id_asignatura" class="browser-default custom-select">
                                 <option value="0">Seleccione Asignatura:</option>
                                 <?php
                                   $query = $mysqli -> query ("SELECT * FROM asignatura");
@@ -130,7 +130,7 @@ $mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
                               </select>
                         </div>
                         <div class="form-group">
-                                <select name="id_niveleducacional">
+                                <select name="id_niveleducacional" class="browser-default custom-select">
                                     <option value="0">Nivel Educacional:</option>
                                     <?php
                                       $query = $mysqli -> query ("SELECT * FROM niveleducacional");
@@ -141,7 +141,7 @@ $mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
                                 </select>
                         </div>
                         <div class="form-group">
-                            <select name="id_modalidad">
+                            <select name="id_modalidad" class="browser-default custom-select">
                                     <option value="0">Seleccione Modalidad:</option>
                                     <?php
                                       $query = $mysqli -> query ("SELECT * FROM modalidad");
@@ -152,9 +152,16 @@ $mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
                                 </select>
                         </div>
                         <div class="form-group">
-                            <label for="name">Foto Perfil</label><input type="file" class="form-control" name="foto_perfil">
+                            <label for="name">Foto Perfil</label>
+                            <input type="file" class="form-control" name="foto_perfil">
                         </div>
                         <button type="submit" class="btn btn-success btn-block">Guardar Cambios</button>
+                    </form>
+
+                    <form action="almacenar.php" method="POST" enctype="multipart/form-data">
+                        <label for="imagen">Imagen:</label>
+                        <input type="file" name="imagen" id="imagen" />
+                        <input type="submit" name="subir" value="Subir Imagen"/>
                     </form>
 
             </div>
@@ -190,6 +197,7 @@ $mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
             </div>
         </div>
     </footer>
+    
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
