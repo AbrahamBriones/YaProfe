@@ -31,11 +31,6 @@ $mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="profesores.php">Profesores</a></li>
-                    <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="my-perfil.php"></a></li> -->
-                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li> -->
-                    <!-- <form class="form-inline">
-                        <li class="nav-item" role="presentation"><a href="my-perfil.php"><button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="button"><?php echo $_SESSION['name']; ?></a></li>                    
-                    </form> -->
                     <li>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">

@@ -76,7 +76,7 @@
     $passHash = password_hash($pass, PASSWORD_DEFAULT);
     
     // Query to send Name, Email and Password hash to the database
-    $query = "INSERT INTO users (name, lastname, email, password, ciudad, telefono, descripcion, id_modalidad, id_niveleducacional, id_asignatura, foto_perfil) VALUES ('$name', '$lastname', '$email', '$passHash', NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
+    $query = "INSERT INTO users (name, lastname, email, password, ciudad, telefono, descripcion, id_modalidad, id_niveleducacional, id_asignatura) VALUES ('$name', '$lastname', '$email', '$passHash', NULL, NULL, NULL, NULL, NULL, NULL)";
     if (mysqli_query($conexion, $query)) {
         echo "<div class='alert alert-success mt-4' role='alert'><h3>Tu cuenta ha sido creada exitosamente.</h3>
         <a class='btn btn-outline-primary' href='login.php' role='button'>Iniciar Sesión</a></div>";

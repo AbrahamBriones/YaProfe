@@ -52,7 +52,7 @@ session_start();
             $password = $_POST['password'];
             
             // Query sent to database
-            $result = mysqli_query($conexion, "SELECT id, name, lastname, email, password, ciudad, telefono, descripcion, precio, id_asignatura FROM users WHERE email = '$email'");
+            $result = mysqli_query($conexion, "SELECT id, name, lastname, email, password, ciudad, telefono, descripcion, precio, id_modalidad, id_niveleducacional, id_asignatura FROM users WHERE email = '$email'");
             
             // Variable $row hold the result of the query
             $row = mysqli_fetch_assoc($result);
@@ -60,11 +60,6 @@ session_start();
             // Variable $hash hold the password hash on database
             $hash = $row['password'];
 
-            /* 
-            password_Verify() function verify if the password entered by the user
-            match the password hash on the database. If everything is OK the session
-            is created for one minute. Change 1 on $_SESSION[start] to 5 for a 5 minutes session.
-            */
             if (password_verify($password, $hash)) {    
                 
                 $_SESSION['loggedin'] = true;
@@ -77,6 +72,8 @@ session_start();
                 $_SESSION['telefono'] = $row['telefono'];
                 $_SESSION['descripcion'] = $row['descripcion'];
                 $_SESSION['precio'] = $row['precio'];
+                $_SESSION['id_modalidad'] = $row['id_modalidad'];
+                $_SESSION['id_niveleducacional'] = $row['id_niveleducacional'];
                 $_SESSION['id_asignatura'] = $row['id_asignatura'];
                 $_SESSION['start'] = time();
                 $_SESSION['expire'] = $_SESSION['start'] + (100 * 60) ; //Duración en segundos de la sesión                     

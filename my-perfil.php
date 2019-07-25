@@ -1,5 +1,8 @@
 <?php
 session_start();
+include 'conexion.php';
+$conexion = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+
 ?>
 
 <!DOCTYPE html>
@@ -28,11 +31,6 @@ session_start();
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="profesores.php">Profesores</a></li>
-                    <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="my-perfil.php"></a></li> -->
-                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li> -->
-                    <!-- <form class="form-inline">
-                        <li class="nav-item" role="presentation"><a href="my-perfil.php"><button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="button"><?php echo $_SESSION['name']; ?></a></li>                    
-                    </form> -->
                     <li>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -73,7 +71,21 @@ session_start();
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="gallery">
-                                    <div class="sp-wrap"><a href="assets/img/tech/my-perfil.png"><img class="img-fluid d-block mx-auto" src="assets/img/tech/my-perfil.png"></a></div>
+
+                                    <div class="sp-wrap"><a href="images/<?php echo $_SESSION['id']; ?>"><img class="img-fluid d-block mx-auto" src="images/<?php echo $_SESSION['id']; ?>"></a></div>
+
+                                    <form action="subir-foto.php" method="POST" enctype="multipart/form-data">
+                                        <label>Cambiar Foto de Perfil</label>
+                                        <span class="btn btn-primary btn-file">
+                                            <input type="file" name="imagen">
+                                        </span>
+                                        <br>
+                                        <br>
+                                        <span class="btn btn-primary btn-file">
+                                            <input type="submit" name="subir" value="Subir Imagen"/>
+                                        </span>
+                                    </form>
+
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -81,7 +93,7 @@ session_start();
                                     <h3><?php echo $_SESSION['name']; ?> <?php echo $_SESSION['lastname']; ?> </h3>
                                     <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
                                     <div class="price">
-                                        <h3>$ <?php echo $_SESSION['precio']; ?> / hora</h3>
+                                        <h3>$ <?php echo number_format($_SESSION['precio'],0,'.','.'); ?> / hora</h3>
                                     </div><a href='edit-perfil.php'><button class="btn btn-primary" type="button"><i class="icon-edit"></i>Editar mi Perfil</button></a>
                                     <span class="glyphicon glyphicon-envelope"></span>
                                     <div class="summary">
@@ -100,28 +112,30 @@ session_start();
                                 <div class="tab-pane fade show active specifications" role="tabpanel" id="specifications">
                                     <div class="table-responsive table-bordered">
                                         <table class="table table-bordered">
+
+                                            <?php  
+                                                $consulta = $_SESSION['telefono'];
+                                                if($consulta == '' ):
+                                            ?>
+
                                             <tbody>
                                                 <tr>
                                                     <td class="stat">Ubicación</td>
                                                     <td><?php echo $_SESSION['ciudad']; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <!--
-                                                    <?php 
-                                                        $query = "SELECT name FROM asignatura WHERE user.id_asignatura = id_asignatura";
-                                                     ?>
-                                                    -->
                                                     <td class="stat">Asignatura</td>
-                                                    <td> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="stat">E-mail</td>
                                                     <td> </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="stat">Modalidad de trabajo</td>
                                                     <td> </td>
                                                 </tr>
+                                                <tr>
+                                                    <td class="stat">Nivel Educacional</td>
+                                                    <td> </td>
+                                                </tr>
+
                                                 <tr>
                                                     <td class="stat">Teléfono</td>
                                                     <td><?php echo $_SESSION['telefono']; ?></td>
@@ -131,6 +145,77 @@ session_start();
                                                     <td><?php echo $_SESSION['email']; ?></td>
                                                 </tr>
                                             </tbody>
+
+
+
+
+                                            <?php else: ?>
+
+                                                <tbody>
+                                                <tr>
+                                                    <td class="stat">Ubicación</td>
+                                                    <td><?php echo $_SESSION['ciudad']; ?></td>
+                                                </tr>
+
+                                                <?php
+                                                    $id_asig = $_SESSION['id_asignatura'];
+
+                                                    $query = "SELECT * FROM asignatura WHERE id=$id_asig";
+                                                    $resultado = $conexion->query($query);
+                                                    while ($row=$resultado->fetch_assoc()) {
+                                                ?>
+                                                <tr>
+                                                    <td class="stat">Asignatura</td>
+                                                    <td><?php echo $row['name'];?></td>
+                                                </tr>
+                                                <?php
+                                                    }
+                                                ?> 
+
+                                                <?php
+                                                    $id_mod = $_SESSION['id_modalidad'];
+
+                                                    $query = "SELECT * FROM modalidad WHERE id=$id_mod";
+                                                    $resultado = $conexion->query($query);
+                                                    while ($row=$resultado->fetch_assoc()) {
+                                                ?>
+                                                <tr>
+                                                    <td class="stat">Modalidad de trabajo</td>
+                                                    <td><?php echo $row['name'];?></td>
+                                                </tr>
+                                                <?php
+                                                    }
+                                                ?>
+
+                                                <?php
+                                                    $id_niv = $_SESSION['id_niveleducacional'];
+
+                                                    $query = "SELECT * FROM niveleducacional WHERE id=$id_niv";
+                                                    $resultado = $conexion->query($query);
+                                                    while ($row=$resultado->fetch_assoc()) {
+                                                ?>
+                                                <tr>
+                                                    <td class="stat">Nivel Educacional</td>
+                                                    <td><?php echo $row['name'];?></td>
+                                                </tr>
+                                                <?php
+                                                    }
+                                                ?> 
+
+                                                <tr>
+                                                    <td class="stat">Teléfono</td>
+                                                    <td><?php echo $_SESSION['telefono']; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">E-mail</td>
+                                                    <td><?php echo $_SESSION['email']; ?></td>
+                                                </tr>
+                                            </tbody>
+
+                                            <?php endif; ?>
+
+
+
                                         </table>
                                     </div>
                                 </div>

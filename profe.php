@@ -1,14 +1,25 @@
 <?php
-session_start();
+session_start();  
+    include 'conexion.php';
+    $conexion = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+    //Obtenemos el id por URL
+    $id = $_GET['id'];
 ?>
+
 
 <!DOCTYPE html>
 <html>
 
+<?php 
+        $query = "SELECT * FROM users WHERE id = $id";
+        $resultado = $conexion->query($query);
+        while ($row=$resultado->fetch_assoc()) {
+    ?>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Nombre Apellido Profesor - YaProfe</title>
+    <title><?php echo $row['name'];?> <?php echo $row['lastname'];?> - YaProfe</title>
     <meta name="description" content="Encuentra tus profes ya!">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
@@ -64,6 +75,7 @@ session_start();
         <?php endif; ?>
 
     </nav>
+    
     <main class="page product-page">
         <section class="clean-block clean-product dark">
             <div class="container">
@@ -72,12 +84,14 @@ session_start();
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="gallery">
-                                    <div class="sp-wrap"><a href="assets/img/tech/image1.jpg"><img class="img-fluid d-block mx-auto" src="assets/img/tech/my-perfil.png"></a></div>
+
+                                    <div class="sp-wrap"><a href="images/<?php echo $row['id']; ?>"><img class="img-fluid d-block mx-auto" src="images/<?php echo $row['id']; ?>"></a></div>
+                                    
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="info">
-                                    <h3>Nombre Apellido Profesor</h3>
+                                    <h3><?php echo $row['name'];?> <?php echo $row['lastname'];?></h3>
                                                 <form>
                                                   <p class="clasificacion">
                                                     <input id="radio1" type="radio" name="estrellas" value="5"><!--
@@ -93,11 +107,11 @@ session_start();
                                                   </p>
                                                 </form>
                                     <div class="price">
-                                        <h3>$0.000 /h</h3>
+                                        <h3>$ <?php echo number_format($row['precio'],0,'.','.');?> / hora</h3>
                                     </div><button class="btn btn-primary" type="button"><i class="icon-envelope"></i>Contactar Profe</button>
                                     <span class="glyphicon glyphicon-envelope"></span>
                                     <div class="summary">
-                                        <p>Aquí corresponde la descripción que cada profesor desee añadir a su perfil.</p>
+                                        <p><?php echo $row['descripcion'];?></p>
                                     </div>
                                 </div>
                             </div>
@@ -112,26 +126,108 @@ session_start();
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active specifications" role="tabpanel" id="specifications">
                                     <div class="table-responsive table-bordered">
+
+
+                                            <?php  
+                                                $consulta = $row['telefono'];
+                                                if($consulta == '' ):
+                                            ?>
+
                                         <table class="table table-bordered">
                                             <tbody>
                                                 <tr>
                                                     <td class="stat">Ubicación</td>
-                                                    <td>Ejemplo de ublicación</td>
+                                                    <td> </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="stat">Asignatura(s)</td>
-                                                    <td>Ejemplo de asignatura</td>
+                                                    <td class="stat">Asignatura</td>
+                                                    <td> </td>
                                                 </tr>
+                                                <tr>
+                                                    <td class="stat">Modalidad de trabajo</td>
+                                                    <td> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">Nivel Educacional</td>
+                                                    <td> </td>
+                                                </tr>
+
                                                 <tr>
                                                     <td class="stat">Teléfono</td>
-                                                    <td>+569-0000000</td>
+                                                    <td> </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="stat">E-mail</td>
-                                                    <td>ejemplo@email.com</td>
+                                                    <td><?php echo $row['email']; ?></td>
+                                                </tr>
+                                            </tbody>
+                                        </table> 
+
+                                            <?php else: ?>
+
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="stat">Ubicación</td>
+                                                    <td><?php echo $row['ciudad'];?></td>
+                                                </tr>
+
+                                               <?php
+                                                    $id_asig = $row['id_asignatura'];
+
+                                                    $query = "SELECT * FROM asignatura WHERE id=$id_asig";
+                                                    $resultado = $conexion->query($query);
+                                                    while ($row2=$resultado->fetch_assoc()) {
+                                                ?>
+                                                <tr>
+                                                    <td class="stat">Asignatura</td>
+                                                    <td><?php echo $row2['name'];?></td>
+                                                </tr>
+                                                <?php
+                                                    }
+                                                ?> 
+
+                                                <?php
+                                                    $id_mod = $row['id_modalidad'];
+
+                                                    $query = "SELECT * FROM modalidad WHERE id=$id_mod";
+                                                    $resultado = $conexion->query($query);
+                                                    while ($row2=$resultado->fetch_assoc()) {
+                                                ?>
+                                                <tr>
+                                                    <td class="stat">Modalidad de trabajo</td>
+                                                    <td><?php echo $row2['name'];?></td>
+                                                </tr>
+                                                <?php
+                                                    }
+                                                ?>
+
+                                                <?php
+                                                    $id_niv = $row['id_niveleducacional'];
+
+                                                    $query = "SELECT * FROM niveleducacional WHERE id=$id_niv";
+                                                    $resultado = $conexion->query($query);
+                                                    while ($row2=$resultado->fetch_assoc()) {
+                                                ?>
+                                                <tr>
+                                                    <td class="stat">Nivel Educacional</td>
+                                                    <td><?php echo $row2['name'];?></td>
+                                                </tr>
+                                                <?php
+                                                    }
+                                                ?>
+                                                <tr>
+                                                    <td class="stat">Teléfono</td>
+                                                    <td><?php echo $row['telefono'];?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">E-mail</td>
+                                                    <td><?php echo $row['email'];?></td>
                                                 </tr>
                                             </tbody>
                                         </table>
+
+                                                <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade show" role="tabpanel" id="reviews">
@@ -157,6 +253,7 @@ session_start();
             </div>
         </section>
     </main>
+
     <footer class="page-footer dark">
         <div class="container">
             <div class="row">
@@ -193,5 +290,9 @@ session_start();
     <script src="assets/js/smoothproducts.min.js"></script>
     <script src="assets/js/theme.js"></script>
 </body>
+
+<?php
+    }
+    ?> 
 
 </html>

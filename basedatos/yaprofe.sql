@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-07-2019 a las 22:03:12
+-- Tiempo de generación: 25-07-2019 a las 07:35:26
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.11
 
@@ -43,7 +43,9 @@ INSERT INTO `asignatura` (`id`, `name`) VALUES
 (3, 'Historia'),
 (4, 'Química'),
 (5, 'Biología'),
-(6, 'Programación');
+(6, 'Programación'),
+(7, 'Comercio'),
+(8, 'Deportes');
 
 -- --------------------------------------------------------
 
@@ -103,19 +105,19 @@ CREATE TABLE `users` (
   `precio` int(20) DEFAULT NULL,
   `id_modalidad` int(11) DEFAULT NULL,
   `id_niveleducacional` int(11) DEFAULT NULL,
-  `id_asignatura` int(11) DEFAULT NULL,
-  `foto_perfil` varchar(250) DEFAULT NULL
+  `id_asignatura` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `lastname`, `email`, `password`, `ciudad`, `telefono`, `descripcion`, `precio`, `id_modalidad`, `id_niveleducacional`, `id_asignatura`, `foto_perfil`) VALUES
-(10, 'Fabian', 'Cardenas', 'fabi2@gmail.com', '$2y$10$ok9WLx2zkYB8yKXJrGsqKuDtbtw0RPZ0vzmlaMD1QukIfj5OCwtw6', 'Chillán', '981767673', 'Yo estudio en la UBB y soy entero loco, entero faioooo', 12500, 1, 1, 1, NULL),
-(13, 'Jorge', 'Baeza', 'jorge@gmail.com', '$2y$10$1MxlgP0hbiMWkkKvuy0uBusUD7QQYCpecWDB.F46Cs/YE8WpRNdGe', 'Las Quilas', '919283797', 'Estudio Informática en la UBB de Chillán con el wn de al lado y el del otro lado, eso. Cobro barato.', 7000, 2, 2, 2, NULL),
-(14, 'Abraham', 'Briones', 'abraham@gmail.com', '$2y$10$qMKyrEmJ07ywaGZvQELgqOXoNCevGWX7kRvZCQJ8XIjtyCWqLphqq', 'Bulnes', '900098787', 'Soy futuro dueño de Xiaomi, así­ que trabajen conmigo logis', 5000, 1, 3, 1, NULL),
-(15, 'Monito', 'Vidal', 'monito@gmail.com', '$2y$10$T.7IIVDMuL2jNhsJ8zYZNeMihCGnKl.rTnCsFo8Q.xn8uNr5BV4PO', 'Santiago', '900000000', 'Soy hijo del King Arthur', 100000, NULL, NULL, NULL, NULL);
+INSERT INTO `users` (`id`, `name`, `lastname`, `email`, `password`, `ciudad`, `telefono`, `descripcion`, `precio`, `id_modalidad`, `id_niveleducacional`, `id_asignatura`) VALUES
+(10, 'Fabian', 'Cardenas', 'fabi2@gmail.com', '$2y$10$ok9WLx2zkYB8yKXJrGsqKuDtbtw0RPZ0vzmlaMD1QukIfj5OCwtw6', 'Yungay', '981767673', 'Soy estudiante de la gloriosa UBB y puedo ayudarte con clases de química ;)', 12500, 1, 1, 4),
+(13, 'Jorge', 'Baeza', 'jorge@gmail.com', '$2y$10$XbX/mjQopRlFMxGt5DoL0.0OWUcZYdlzHMN9MCmBgTG75c2DVeSba', 'San Ignacio', '919283797', 'Soy egresado de historia, así que ya sabes cómo puedo ayudarte. Contactame.', 7000, 1, 1, 3),
+(14, 'Abraham', 'Briones', 'abraham@gmail.com', '$2y$10$qMKyrEmJ07ywaGZvQELgqOXoNCevGWX7kRvZCQJ8XIjtyCWqLphqq', 'Bulnes', '900098787', 'Soy futuro dueño de Xiaomi, así­ que trabajen conmigo, puedo ayudarles con las ciencias empresariales en general.', 5000, 1, 3, 7),
+(15, 'Monito', 'Vidal', 'monito@gmail.com', '$2y$10$xlCUCV6IHsWN5/2jYSqt2uSKc4.m473k8TCN0Q2z8cdXYH1u0rNPq', 'Santiago', '900000000', 'Soy hijo del King Arthur, te ayudo a editar vÃ­deos y jugar a la pelota.', 100000, 1, 1, 8),
+(19, 'Lionel', 'Messi', 'messi@gmail.com', '$2y$10$C.y5GMrDtQ6XuYw/YgZZbOIGgWozBSj5y4qXlHOXqwDxfaZ2986G6', 'Barcelona', '123456789', 'Ya no juego casi', 990000, 1, 3, 8);
 
 --
 -- Índices para tablas volcadas
@@ -156,7 +158,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `asignatura`
 --
 ALTER TABLE `asignatura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `modalidad`
@@ -174,7 +176,7 @@ ALTER TABLE `niveleducacional`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Restricciones para tablas volcadas

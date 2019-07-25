@@ -115,7 +115,7 @@ $mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
                         </div>
                         <div class="form-group">
                             <label for="name">Precio por hora</label>
-                            <input type="number" class="form-control" name="precio" value="<?php echo $_SESSION['precio'];?>" required>
+                            <input type="number" class="form-control" name="precio" value="<?php echo number_format($_SESSION['precio'],0,'','.'); ?>" required>
                         </div>
 
 
@@ -151,18 +151,10 @@ $mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
                                     ?>
                                 </select>
                         </div>
-                        <div class="form-group">
-                            <label for="name">Foto Perfil</label>
-                            <input type="file" class="form-control" name="foto_perfil">
-                        </div>
+
                         <button type="submit" class="btn btn-success btn-block">Guardar Cambios</button>
                     </form>
 
-                    <form action="almacenar.php" method="POST" enctype="multipart/form-data">
-                        <label for="imagen">Imagen:</label>
-                        <input type="file" name="imagen" id="imagen" />
-                        <input type="submit" name="subir" value="Subir Imagen"/>
-                    </form>
 
             </div>
         </section>

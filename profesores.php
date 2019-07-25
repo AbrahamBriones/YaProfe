@@ -2,13 +2,15 @@
 session_start();
 include 'conexion.php';
 $conexion = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <meta charset="utf-8">
+   
+    <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Profesores - YaProfe</title>
     <meta name="description" content="Encuentra tus profes ya!">
@@ -156,14 +158,14 @@ $conexion = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
-                                            <div class="image"><a href="profe.php"><img class="img-fluid d-block mx-auto" src="assets/img/tech/my-perfil.png"></a></div>
+                                            <div class="image"><a href="profe.php?id=<?php echo $row['id'];?>"><img class="img-fluid d-block mx-auto" src="images/<?php echo $row['id']; ?>"></a></div>
                                             <h5><?php echo $row['name'];?> <?php echo $row['lastname'];?></h5>
                                             <h9><?php echo $row['ciudad'];?></h9>
                                             <div class="product-name"><a href="#"><?php echo $row['descripcion'];?></a></div>
                                             <div class="about">
                                                 <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div> 
                                                 <div class="price">
-                                                    <h3>$ <?php echo $row['precio'];?> /h</h3>
+                                                    <h3>$ <?php echo number_format($row['precio'],0,'.','.');?> /h</h3>
                                                 </div>
                                             </div>
                                         </div>
